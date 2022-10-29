@@ -1,0 +1,50 @@
+.tiket {
+  box-sizing: border-box;
+  overflow: hidden;
+
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  box-shadow: 0px 1px 0 #091e4240;
+
+  &-header {
+    height: 50px;
+    background-color: #29cce5;
+    border-radius: 8px 8px 0 0;
+
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+    &__title {
+      align-self: center;
+      padding: 0;
+    }
+  }
+  &-body {
+    height: 80px;
+    padding: 5px 10px;
+  }
+
+  &-footer {
+    height: fit-content !important;
+    padding: 0px 10px;
+    &__edit-btn {
+      color: rgba(139, 137, 137, 0.69);
+      padding-left: 30px;
+      transform: rotatey(180deg);
+
+      &:hover {
+        color: rgb(60, 60, 60);
+        transition: 0.3s;
+      }
+    }
+
+    &__deadline {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgb(99, 24, 24);
+    }
+  }
+}
