@@ -31,6 +31,10 @@ export default class TodoBoard extends Component {
     };
   }
 
+  createTicket(){
+    
+  }
+
   render() {
     let todos = this.state.tasks || [];
 
