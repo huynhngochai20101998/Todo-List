@@ -5,6 +5,8 @@ import "./TicketForm.scss";
 class TicketForm extends Component {
   constructor(props) {
     super(props);
+    this.addTask = this.props.addTask.bind(this);
+
     this.state = {
       isEditForm: false,
       title: "",
@@ -31,9 +33,7 @@ class TicketForm extends Component {
   }
 
   handleCreateTicket(...input) {
-    console.log(this.state.title);
-    console.log(this.state.deadline);
-    console.log(this.state.description);
+    this.addTask(this.state.title, this.state.deadline, this.state.description);
   }
   handleEditTicket(...input) {
     console.log("A");
