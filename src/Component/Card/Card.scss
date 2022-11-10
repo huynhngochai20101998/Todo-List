@@ -1,4 +1,4 @@
-.tiket {
+.ticket {
   box-sizing: border-box;
   overflow: hidden;
 
@@ -10,16 +10,60 @@
 
   &-header {
     height: 50px;
-    background-color: #29cce5;
     border-radius: 8px 8px 0 0;
 
     display: flex;
-    align-content: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 3% 0 5%;
+    align-items: center;
 
     &__title {
       align-self: center;
       padding: 0;
+    }
+
+    &__del {
+      float: right;
+
+      display: block;
+      width: 1em;
+      height: 1em;
+      position: relative;
+
+      .line {
+        display: inline-block;
+        border-radius: 50%;
+        height: 3px;
+        width: 3px;
+        border-radius: 50%;
+        background-color: #000000;
+
+        position: absolute;
+        top: 45%;
+        left: 45%;
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        .line-one {
+          width: 100%;
+          left: 0%;
+          border-radius: 7%;
+          transition-delay: 0.5s;
+          transform: rotate(-45deg);
+          animation: ani-first 0.6s linear;
+        }
+
+        .line-second {
+          width: 100%;
+          left: 0%;
+          border-radius: 7%;
+          transition-delay: 0.5s;
+          transform: rotate(45deg);
+          animation: ani-second 0.6s linear;
+        }
+      }
     }
   }
   &-body {
@@ -30,13 +74,16 @@
   &-footer {
     height: fit-content !important;
     padding: 0px 10px;
+    background-color: #dddada;
+
     &__edit-btn {
-      color: rgba(139, 137, 137, 0.69);
+      color: #3c3c3c;
       padding-left: 30px;
       transform: rotatey(180deg);
 
       &:hover {
-        color: rgb(60, 60, 60);
+        color: #000000;
+        cursor: pointer;
         transition: 0.3s;
       }
     }
@@ -44,7 +91,37 @@
     &__deadline {
       font-size: 14px;
       font-weight: 600;
-      color: rgb(99, 24, 24);
+      color: #631818;
     }
+  }
+}
+
+@keyframes ani-first {
+  0% {
+  }
+  60% {
+    left: 0;
+    width: 100%;
+    border-radius: 7%;
+    transition: 0.3s;
+  }
+  100% {
+    transform: rotate(45deg);
+    transition: 0.2s;
+  }
+}
+
+@keyframes ani-second {
+  0% {
+  }
+  60% {
+    left: 0;
+    width: 100%;
+    border-radius: 7%;
+    transition: 0.3s;
+  }
+  100% {
+    transform: rotate(-45deg);
+    transition: 0.2s;
   }
 }
