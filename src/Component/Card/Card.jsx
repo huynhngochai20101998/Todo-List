@@ -23,17 +23,17 @@ export default class Card extends Component {
   };
 
   render() {
-    const { staskDetail, status, delTicket } = this.props;
+    const { taskDetail, status, delTicket, deleteTicketByForm } = this.props;
 
     return (
       <div className="ticket">
         <div className="ticket-header" style={this.getBackgroundHeader(status)}>
           <h5 className="ticket-header__title text-center">
-            {staskDetail?.title || "[Title]"}
+            {taskDetail?.title || "[Title]"}
           </h5>
           <span
             className="ticket-header__del float-end"
-            onClick={() => delTicket(staskDetail.id)}
+            onClick={() => delTicket(taskDetail.id)}
           >
             <span className="line line-100 line-one"></span>
             <span className="line line-100 line-second"></span>
@@ -41,15 +41,20 @@ export default class Card extends Component {
         </div>
         <div className="ticket-body">
           <p className="ticket-body__content">
-            {staskDetail.description || "[Description]"}
+            {taskDetail.description || "[Description]"}
           </p>
         </div>
         <div className="ticket-footer py-2 d-flex justify-content-between">
           <p className="p-0 m-0 ticket-footer__edit-btn float-end">
-            <i className="fa-sharp fa-solid fa-pencil"></i>
+            <i
+              onClick={() => {
+                deleteTicketByForm(taskDetail);
+              }}
+              className="fa-sharp fa-solid fa-pencil"
+            ></i>
           </p>
           <p className="p-0 m-0 ticket-footer__deadline float-end">
-            {staskDetail.deadline || "[Deadline]"}
+            {taskDetail.deadline || "[Deadline]"}
           </p>
         </div>
       </div>

@@ -4,14 +4,15 @@ import "./ListTask.scss";
 
 export default class ListTask extends Component {
   render() {
-    const { delTicket, tasks } = this.props;
+    const { delTicket, tasks, deleteTicketByForm } = this.props;
 
     const taskRender = tasks?.map((task, index) => (
       <Card
         key={index}
-        staskDetail={task}
+        taskDetail={task}
         delTicket={delTicket}
         status={task.status}
+        deleteTicketByForm={deleteTicketByForm}
       />
     ));
 

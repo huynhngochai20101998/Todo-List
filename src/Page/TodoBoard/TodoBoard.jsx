@@ -30,13 +30,19 @@ export default class TodoBoard extends Component {
           status: TICKET_STATUS.DONE,
         },
       ],
+      ticketDelete: {
+        id: 0,
+        title: "",
+        deadline: "",
+        description: "",
+      },
     };
 
     this.createTicket = this.createTicket.bind(this);
   }
 
-  createTicket(title, deadline, description) {
-    if (title && deadline && description) {
+  createTicket(title, deadline, status, description) {
+    if (title && deadline && status) {
       let currentTasks = this.state.tasks;
       let lastItemId = getLastItemId(currentTasks);
 
@@ -45,25 +51,50 @@ export default class TodoBoard extends Component {
         title: title || "",
         deadline: deadline || "",
         description: description || "",
-        status: TICKET_STATUS.TODO,
+        status: parseInt(status),
       };
 
       currentTasks.push(newTicket);
+
+      console.log(currentTasks);
       this.setState({ task: currentTasks });
     }
   }
 
-  deleteTicket = (ticketId) => {
-    let currentTasks = this.state.tasks;
+  editTask = (id, title, deadline, status, desc) => {
+    if (id && title && deadline && status) {
+      let currentTasks = this.state.tasks;
 
-    const newTasks = currentTasks.filter((ticket) => ticket.id !== ticketId);
-    this.setState({ tasks: newTasks });
+      for (const task of currentTasks) {
+        if (task.id === id) {
+          task.title = title;
+          task.deadline = deadline;
+          task.status = parseInt(status);
+          task.description = desc;
+        }
+      }
+
+      this.setState({ task: currentTasks });
+    }
+  };
+
+  deleteTicket = (ticketId) => {
+    if (ticketId) {
+      let currentTasks = this.state.tasks;
+
+      const newTasks = currentTasks.filter((ticket) => ticket.id !== ticketId);
+      this.setState({ tasks: newTasks });
+    }
+  };
+
+  getValueTicketDeleteByForm = (ticket) => {
+    this.setState({ ticketDelete: ticket });
   };
 
   render() {
-    const { todoTasks, progressTasks, doneTasks } = taskDivisor(
-      this.state.tasks
-    );
+    const { tasks, ticketDelete } = this.state;
+
+    const { todoTasks, progressTasks, doneTasks } = taskDivisor(tasks);
 
     return (
       <div className="wrapper">
@@ -72,17 +103,34 @@ export default class TodoBoard extends Component {
           <div className="board-item board-content d-flex justify-content-between">
             <div className="board-content__form">
               <h3 className="form-title text-center">Form Ticket</h3>
-              <TicketForm addTask={this.createTicket} />
+              <TicketForm
+                ticketDelete={ticketDelete}
+                deleteTicket={this.deleteTicket}
+                addTask={this.createTicket}
+                editTask={this.editTask}
+              />
             </div>
             <div className="board-content__list">
               <div className="d-flex justify-content-between wrapper-items">
-                <ListTask delTicket={this.deleteTicket} tasks={todoTasks}>
+                <ListTask
+                  tasks={todoTasks}
+                  delTicket={this.deleteTicket}
+                  deleteTicketByForm={this.getValueTicketDeleteByForm}
+                >
                   To Do
                 </ListTask>
-                <ListTask delTicket={this.deleteTicket} tasks={progressTasks}>
+                <ListTask
+                  tasks={progressTasks}
+                  delTicket={this.deleteTicket}
+                  deleteTicketByForm={this.getValueTicketDeleteByForm}
+                >
                   Progress
                 </ListTask>
-                <ListTask delTicket={this.deleteTicket} tasks={doneTasks}>
+                <ListTask
+                  tasks={doneTasks}
+                  delTicket={this.deleteTicket}
+                  deleteTicketByForm={this.getValueTicketDeleteByForm}
+                >
                   Done
                 </ListTask>
               </div>
