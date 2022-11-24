@@ -41,10 +41,10 @@ class TicketForm extends Component {
   }
   clearCacheData = () => {
     this.setState({ id: 0 });
-    this.refTitle.current.value = "";
-    this.refDeadline.current.value = "";
-    this.refStatus.current.value = "";
-    this.refDescription.current.value = "";
+    this.refTitle.current.value = null;
+    this.refDeadline.current.value = null;
+    this.refStatus.current.value = null;
+    this.refDescription.current.value = null;
   };
 
   handleCreateTicket(...input) {
@@ -80,13 +80,15 @@ class TicketForm extends Component {
     };
   }
 
+  componentDidMount() {}
+
   render() {
     const { deleteTicket } = this.props;
     const { title, deadline, status, description } = this.state;
     console.log(title);
 
     return (
-      <Form id="form" className="form-custom position-relative" on>
+      <Form id="form" className="form-custom" on>
         <FormGroup floating>
           <Input
             id="title"
@@ -140,7 +142,7 @@ class TicketForm extends Component {
           />
           <Label for="description">Description</Label>
         </FormGroup>{" "}
-        <div className="form-custom__btn position-absolute">
+        <div className="form-custom__btn float-end">
           <Button
             className="btn-item"
             color="success"
@@ -171,4 +173,10 @@ class TicketForm extends Component {
   }
 }
 
+const FORM_STATUS = {
+  EDIT: 1,
+  CREATE: 2,
+};
+
+export { FORM_STATUS };
 export default TicketForm;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { TICKET_STATUS } from "../../Page/TodoBoard/TodoBoard";
+import { FORM_STATUS } from "../TicketForm/TicketForm";
 import "./Card.scss";
 
 export default class Card extends Component {
@@ -23,7 +24,13 @@ export default class Card extends Component {
   };
 
   render() {
-    const { taskDetail, status, delTicket, deleteTicketByForm } = this.props;
+    const {
+      taskDetail,
+      status,
+      delTicket,
+      toggleIsShowForm,
+      deleteTicketByForm,
+    } = this.props;
 
     return (
       <div className="ticket">
@@ -49,6 +56,7 @@ export default class Card extends Component {
             <i
               onClick={() => {
                 deleteTicketByForm(taskDetail);
+                toggleIsShowForm(FORM_STATUS.EDIT);
               }}
               className="fa-sharp fa-solid fa-pencil"
             ></i>

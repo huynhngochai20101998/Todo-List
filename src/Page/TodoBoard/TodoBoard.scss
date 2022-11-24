@@ -28,9 +28,20 @@
 
       display: flex;
 
-      &__form {
+      .show-form {
+        height: 520px;
         width: 30%;
-        height: max-content;
+        transition: 0.3s;
+      }
+
+      .hide-form {
+        overflow: hidden;
+        height: 0;
+        width: 0;
+        transition: 0.3s;
+      }
+
+      &__form {
         background-color: #f5faff;
         border-radius: 10px;
 

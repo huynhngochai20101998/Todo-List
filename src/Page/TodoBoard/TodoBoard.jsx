@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import ListTask from "../../Component/ListTask/ListTask";
-import TicketForm from "../../Component/TicketForm/TicketForm";
+import TicketForm, { FORM_STATUS } from "../../Component/TicketForm/TicketForm";
 import "./TodoBoard.scss";
 
 export default class TodoBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isShowForm: false,
       tasks: [
         {
           id: 1,
@@ -56,7 +57,6 @@ export default class TodoBoard extends Component {
 
       currentTasks.push(newTicket);
 
-      console.log(currentTasks);
       this.setState({ task: currentTasks });
     }
   }
@@ -91,17 +91,43 @@ export default class TodoBoard extends Component {
     this.setState({ ticketDelete: ticket });
   };
 
+  toggleIsShowForm = (state) => {
+    console.log(state);
+    if (state === FORM_STATUS.CREATE) {
+      if (this.state.isShowForm) {
+        this.setState({ isShowForm: false });
+      } else {
+        this.setState({ isShowForm: true });
+      }
+    } else {
+      this.setState({ isShowForm: true });
+    }
+  };
+
   render() {
-    const { tasks, ticketDelete } = this.state;
+    const { tasks, ticketDelete, isShowForm } = this.state;
 
     const { todoTasks, progressTasks, doneTasks } = taskDivisor(tasks);
 
     return (
       <div className="wrapper">
-        <div className="board d-flex">
+        <div className="board d-flex position-relative">
+          <div
+            className={`${
+              isShowForm ? `btn-primary` : `btn-danger`
+            } btn position-absolute bold`}
+            style={{ top: "30px", left: "30px" }}
+            onClick={() => this.toggleIsShowForm(FORM_STATUS.CREATE)}
+          >
+            {isShowForm ? `Form: ON` : `Form: OFF`}
+          </div>
           <h1 className="board-item board-title">Todo List Board</h1>
-          <div className="board-item board-content d-flex justify-content-between">
-            <div className="board-content__form">
+          <div className="board-item board-content d-flex justify-content-around">
+            <div
+              className={`board-content__form ${
+                isShowForm ? `show-form` : `hide-form`
+              }`}
+            >
               <h3 className="form-title text-center">Form Ticket</h3>
               <TicketForm
                 ticketDelete={ticketDelete}
@@ -116,6 +142,7 @@ export default class TodoBoard extends Component {
                   tasks={todoTasks}
                   delTicket={this.deleteTicket}
                   deleteTicketByForm={this.getValueTicketDeleteByForm}
+                  toggleIsShowForm={this.toggleIsShowForm}
                 >
                   To Do
                 </ListTask>
@@ -123,6 +150,7 @@ export default class TodoBoard extends Component {
                   tasks={progressTasks}
                   delTicket={this.deleteTicket}
                   deleteTicketByForm={this.getValueTicketDeleteByForm}
+                  toggleIsShowForm={this.toggleIsShowForm}
                 >
                   Progress
                 </ListTask>
@@ -130,6 +158,7 @@ export default class TodoBoard extends Component {
                   tasks={doneTasks}
                   delTicket={this.deleteTicket}
                   deleteTicketByForm={this.getValueTicketDeleteByForm}
+                  toggleIsShowForm={this.toggleIsShowForm}
                 >
                   Done
                 </ListTask>
